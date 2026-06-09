@@ -92,6 +92,11 @@ a {
   margin-bottom: 56px;
 }
 
+.name-highlight {
+  color: var(--accent);
+  font-weight: 700;
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
