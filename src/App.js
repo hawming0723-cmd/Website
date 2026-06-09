@@ -9,7 +9,8 @@ const skills = [
   'MERN Stack',
   'Node.js',
   'CSS',
-  'Business Analytics'
+  'Business Analytics',
+  'MySQL'
 ];
 
 const highlights = [
@@ -54,7 +55,7 @@ function App() {
             <span className="brand-mark" />
             <span>Portfolio</span>
           </div>
-          <a className="nav-link" href="mailto:your.email@example.com">
+          <a className="nav-link" href="mailto:hawming0723@gmail.com">
             Let’s connect
           </a>
         </nav>
@@ -137,7 +138,7 @@ function App() {
               be happy to help.
             </p>
           </div>
-          <a className="button button-primary" href="mailto:your.email@example.com">
+          <a className="button button-primary" href="mailto:hawming0723@gmail.com">
             Send me an email
           </a>
         </section>
