@@ -149,7 +149,7 @@ function App() {
 
         <section className="section">
           <div className="stack-header">
-            <p className="stack-label">✦ MY STACK</p>
+            <p className="eyebrow">My Skills</p>
           </div>
           <div className="skills-grid">
             <div className="skill-category">
