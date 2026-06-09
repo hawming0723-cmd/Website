@@ -377,6 +377,14 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.skill-category.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .category-title {
@@ -387,6 +395,14 @@ h1 {
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.95;
+  opacity: 0;
+  transform: translateX(-14px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.skill-category.visible .category-title {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .skill-pill {
@@ -400,8 +416,15 @@ h1 {
   color: var(--text);
   font-weight: 700;
   font-size: 1.25rem;
-  transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: transform 600ms ease, opacity 600ms ease, background 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
   white-space: nowrap;
+}
+
+.skill-category.visible .skill-pill {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .skill-icon {

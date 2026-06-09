@@ -56,7 +56,7 @@ function App() {
   const [cursor, setCursor] = useState({ x: 0, y: 0, active: false });
 
   useEffect(() => {
-    const sections = document.querySelectorAll('.section');
+    const elements = document.querySelectorAll('.section, .skill-category');
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -72,7 +72,7 @@ function App() {
       }
     );
 
-    sections.forEach((section) => observer.observe(section));
+    elements.forEach((element) => observer.observe(element));
 
     return () => observer.disconnect();
   }, []);
