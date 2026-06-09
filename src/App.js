@@ -1,17 +1,23 @@
-﻿import React from 'react';
+﻿import React, { useEffect, useState } from 'react';
 
-const skills = [
-  'Web Development',
-  'Web Design',
-  'UI/UX Design',
-  'HTML',
-  'React',
-  'MERN Stack',
-  'Node.js',
-  'CSS',
-  'Business Analytics',
-  'MySQL'
-];
+const skillCategories = {
+  frontend: [
+    { name: 'HTML', icon: '/logos/HTML.png' },
+    { name: 'CSS', icon: '/logos/CSS.png' },
+    { name: 'JavaScript', icon: '/logos/JavaScript.png' },
+    { name: 'React', icon: '/logos/React.png' },
+    { name: 'Bootstrap', icon: '/logos/Bootstrap.png' }
+  ],
+  backend: [
+    { name: 'Node.js', icon: '/logos/NodeJS.png' },
+    { name: 'Express.js', icon: '/logos/ExpressJS.png' },
+    { name: 'MERN Stack', icon: '/logos/MernStack.png' }
+  ],
+  database: [
+    { name: 'MySQL', icon: '/logos/MySQL.png' },
+    { name: 'MongoDB', icon: '/logos/MongoDB.png' }
+  ]
+};
 
 const highlights = [
   {
@@ -47,15 +53,59 @@ const projects = [
 ];
 
 function App() {
+  const [cursor, setCursor] = useState({ x: 0, y: 0, active: false });
+
+  useEffect(() => {
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          } else {
+            entry.target.classList.remove('visible');
+          }
+        });
+      },
+      {
+        threshold: 0.2
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setCursor((current) => ({
+        x: event.clientX,
+        y: event.clientY,
+        active: current.active
+      }));
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  const activateCursor = () => setCursor((current) => ({ ...current, active: true }));
+  const deactivateCursor = () => setCursor((current) => ({ ...current, active: false }));
+
   return (
     <div className="page-shell">
+      <div
+        className={`custom-cursor ${cursor.active ? 'active' : ''}`}
+        style={{ left: cursor.x, top: cursor.y }}
+      />
       <header className="hero">
         <nav className="topbar">
           <div className="brand">
             <span className="brand-mark" />
             <span>Portfolio</span>
           </div>
-          <a className="nav-link" href="mailto:hawming0723@gmail.com">
+          <a className="nav-link" href="mailto:hawming0723@gmail.com" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
             Let’s connect
           </a>
         </nav>
@@ -64,18 +114,16 @@ function App() {
           <section className="hero-copy">
             <p className="eyebrow">Republic Polytechnic • Digital Design and Development</p>
             <h1>
-              Hi, I'm <span className="name-highlight">NG HAW MING</span>, a fresh graduate building sharp digital experiences.
+              Hi, I'm <span className="name-highlight">HAW MING</span>, a fresh graduate web developer building sharp digital experiences.
             </h1>
             <p className="lede">
-              I’m 22 and passionate about web development, web design, and UI/UX design. I like
-              creating polished websites and applications that look premium, feel intuitive, and work
-              well across devices.
+              I'm passionate about creating polished websites and applications that look premium, feel intuitive, and work well across devices.
             </p>
             <div className="hero-actions">
-              <a className="button button-primary" href="#about">
+              <a className="button button-primary" href="#about" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
                 About me
               </a>
-              <a className="button button-secondary" href="#contact">
+              <a className="button button-secondary" href="#contact" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
                 Contact
               </a>
             </div>
@@ -91,7 +139,7 @@ function App() {
           </div>
           <div className="about-grid">
             {highlights.map((item) => (
-              <article className="info-card" key={item.title}>
+              <article className="info-card" key={item.title} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
               </article>
@@ -100,16 +148,43 @@ function App() {
         </section>
 
         <section className="section">
-          <div className="section-heading">
-            <p className="eyebrow">Skills</p>
-            <h2>What I work with</h2>
+          <div className="stack-header">
+            <p className="stack-label">✦ MY STACK</p>
           </div>
-          <div className="skill-cloud">
-            {skills.map((skill) => (
-              <span className="skill-pill" key={skill}>
-                {skill}
-              </span>
-            ))}
+          <div className="skills-grid">
+            <div className="skill-category">
+              <h3 className="category-title">FRONTEND</h3>
+              <div className="skill-cloud">
+                {skillCategories.frontend.map((skill) => (
+                  <span className="skill-pill" key={skill.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+                    <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                    <span className="skill-name">{skill.name}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="skill-category">
+              <h3 className="category-title">BACKEND</h3>
+              <div className="skill-cloud">
+                {skillCategories.backend.map((skill) => (
+                  <span className="skill-pill" key={skill.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+                    <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                    <span className="skill-name">{skill.name}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="skill-category">
+              <h3 className="category-title">DATABASE</h3>
+              <div className="skill-cloud">
+                {skillCategories.database.map((skill) => (
+                  <span className="skill-pill" key={skill.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+                    <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                    <span className="skill-name">{skill.name}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -120,7 +195,7 @@ function App() {
           </div>
           <div className="project-grid">
             {projects.map((project, index) => (
-              <article className="project-card" key={project.name}>
+              <article className="project-card" key={project.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
                 <p className="project-index">0{index + 1}</p>
                 <h3>{project.name}</h3>
                 <p>{project.detail}</p>
@@ -132,10 +207,9 @@ function App() {
         <section className="section contact-section" id="contact">
           <div>
             <p className="eyebrow">Contact</p>
-            <h2>Let’s build something sharp together.</h2>
+            <h2>Let’s build something together.</h2>
             <p>
-              If you want a web portfolio, a product landing page, or a simple digital presence, I’d
-              be happy to help.
+              If you need something that is within my skill set, I’d be happy to help.
             </p>
           </div>
           <a className="button button-primary" href="mailto:hawming0723@gmail.com">
