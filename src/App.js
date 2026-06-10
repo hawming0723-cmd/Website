@@ -56,33 +56,40 @@ function App() {
   const [cursor, setCursor] = useState({ x: 0, y: 0, active: false });
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  useEffect(() => {
-    const elements = document.querySelectorAll('.section, .skill-category');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          } else {
-            entry.target.classList.remove('visible');
-          }
-        });
-      },
-      {
-        threshold: 0.2
-      }
-    );
+useEffect(() => {
+  const elements = document.querySelectorAll('.section, .skill-category');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
 
-    elements.forEach((element) => observer.observe(element));
+          const pills = entry.target.querySelectorAll('.skill-pill');
+          pills.forEach((pill, i) => {
+            pill.style.transitionDelay = `${i * 180}ms`;
+          });
+        } else {
+          entry.target.classList.remove('visible');
 
-    return () => observer.disconnect();
-  }, []);
+          const pills = entry.target.querySelectorAll('.skill-pill');
+          pills.forEach((pill) => {
+            pill.style.transitionDelay = '0ms';
+          });
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  elements.forEach((element) => observer.observe(element));
+  return () => observer.disconnect();
+}, []);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = window.scrollY / scrollHeight;
-      setScrollProgress(scrolled);
+      setScrollProgress(scrolled)
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -101,6 +108,63 @@ function App() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  useEffect(() => {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;';
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = Array.from({ length: 40 }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    size: 1 + Math.random() * 0.75,
+    speed: 0.1 + Math.random() * 0.25,
+    opacity: 0.4 + Math.random() * 1,
+    drift: (Math.random() - 0.5) * 0.3,   
+    hue: 15 + Math.random() * 25
+  }));
+
+  let animId;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+      p.y += p.speed;
+      p.x += p.drift;
+
+      // reset to top when it falls off bottom
+      if (p.y > canvas.height + 10) {
+        p.y = -10;
+        p.x = Math.random() * canvas.width;
+        p.opacity = 0.2 + Math.random() * 0.7;
+        p.speed = 0.8 + Math.random() * 2.2;
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.opacity})`;
+      ctx.fill();
+    });
+
+    animId = requestAnimationFrame(draw);
+  }
+  animId = requestAnimationFrame(draw);
+
+  return () => {
+    cancelAnimationFrame(animId);
+    window.removeEventListener('resize', resize);
+    document.body.removeChild(canvas);
+  };
+}, []);
 
   const activateCursor = () => setCursor((current) => ({ ...current, active: true }));
   const deactivateCursor = () => setCursor((current) => ({ ...current, active: false }));

@@ -23,10 +23,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at top left, rgba(255, 122, 24, 0.18), transparent 28%),
-    radial-gradient(circle at top right, rgba(255, 155, 61, 0.12), transparent 24%),
-    linear-gradient(180deg, #0b0b0b 0%, #050505 55%, #090909 100%);
+  background: linear-gradient(180deg, #0b0b0b 0%, #050505 55%, #090909 100%);
   color: var(--text);
   overflow-x: hidden;
   cursor: none;
@@ -76,9 +73,9 @@ a {
   overflow: hidden;
   border: 1px solid var(--panel-border);
   border-radius: 32px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(6, 6, 6, 0.9);
+  background: rgba(6, 6, 6, 0.55); 
+  backdrop-filter: blur(12px);    
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: var(--shadow);
   padding: 24px;
   animation: floatHero 10s ease-in-out infinite alternate;
@@ -181,6 +178,8 @@ a {
   text-align: left;
   margin: 0 auto;
   animation: fadeInRise 1200ms cubic-bezier(0.2, 0.75, 0.2, 1) both;
+  background: transparent; 
+  border: none;
 }
 
 .hero-label,
