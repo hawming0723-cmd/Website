@@ -23,12 +23,12 @@ const highlights = [
   {
     title: 'Design-minded builder',
     description:
-      'I turn clean visual ideas into responsive interfaces that feel modern, fast, and easy to use.'
+      'I turn visual ideas into responsive interfaces that feel modern, fast, and easy to use.'
   },
   {
     title: 'Frontend + full-stack foundation',
     description:
-      'My training covers React, Node.js, and the MERN stack, so I can work from interface to backend flow.'
+      'My skills covers React, Node.js, and the MERN stack, so I can work from interface to backend flow.'
   },
   {
     title: 'Business-aware thinking',
