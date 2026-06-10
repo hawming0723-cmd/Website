@@ -54,6 +54,7 @@ const projects = [
 
 function App() {
   const [cursor, setCursor] = useState({ x: 0, y: 0, active: false });
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const elements = document.querySelectorAll('.section, .skill-category');
@@ -78,6 +79,17 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = window.scrollY / scrollHeight;
+      setScrollProgress(scrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
     const handleMouseMove = (event) => {
       setCursor((current) => ({
         x: event.clientX,
@@ -95,6 +107,9 @@ function App() {
 
   return (
     <div className="page-shell">
+      <div className="custom-scrollbar">
+        <div className="scrollbar-thumb" style={{ top: scrollProgress !== 0 ? `${scrollProgress * (window.innerHeight - 120)}px` : '0px' }} />
+      </div>
       <div
         className={`custom-cursor ${cursor.active ? 'active' : ''}`}
         style={{ left: cursor.x, top: cursor.y }}
@@ -154,8 +169,8 @@ function App() {
             <div className="skill-category">
               <h3 className="category-title">FRONTEND</h3>
               <div className="skill-cloud">
-                {skillCategories.frontend.map((skill) => (
-                  <span className="skill-pill" key={skill.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+                {skillCategories.frontend.map((skill, index) => (
+                  <span className="skill-pill" key={skill.name} style={{ '--skill-delay': `${index * 200}ms` }} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
                     <img src={skill.icon} alt={skill.name} className="skill-icon" />
                     <span className="skill-name">{skill.name}</span>
                   </span>
@@ -165,8 +180,8 @@ function App() {
             <div className="skill-category">
               <h3 className="category-title">BACKEND</h3>
               <div className="skill-cloud">
-                {skillCategories.backend.map((skill) => (
-                  <span className="skill-pill" key={skill.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+                {skillCategories.backend.map((skill, index) => (
+                  <span className="skill-pill" key={skill.name} style={{ '--skill-delay': `${index * 200}ms` }} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
                     <img src={skill.icon} alt={skill.name} className="skill-icon" />
                     <span className="skill-name">{skill.name}</span>
                   </span>
@@ -176,8 +191,8 @@ function App() {
             <div className="skill-category">
               <h3 className="category-title">DATABASE</h3>
               <div className="skill-cloud">
-                {skillCategories.database.map((skill) => (
-                  <span className="skill-pill" key={skill.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+                {skillCategories.database.map((skill, index) => (
+                  <span className="skill-pill" key={skill.name} style={{ '--skill-delay': `${index * 200}ms` }} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
                     <img src={skill.icon} alt={skill.name} className="skill-icon" />
                     <span className="skill-name">{skill.name}</span>
                   </span>

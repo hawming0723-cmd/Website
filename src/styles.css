@@ -18,6 +18,14 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+  /* Hide default scrollbar */
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -30,6 +38,29 @@ body {
   color: var(--text);
   overflow-x: hidden;
   cursor: none;
+}
+
+.custom-scrollbar {
+  position: fixed;
+  right: 12px;
+  top: 0;
+  width: 6px;
+  height: 100vh;
+  background: rgba(255, 122, 24, 0.1);
+  border-radius: 3px;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+.scrollbar-thumb {
+  position: absolute;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-strong));
+  border-radius: 3px;
+  box-shadow: 0 0 12px rgba(255, 122, 24, 0.4);
+  transition: box-shadow 200ms ease;
+  top: 0;
 }
 
 .custom-cursor {
@@ -423,8 +454,8 @@ h1 {
 }
 
 .skill-category.visible .skill-pill {
-  opacity: 1;
-  transform: translateY(0);
+  animation: skillFadeIn 600ms cubic-bezier(0.2, 0.75, 0.2, 1) both;
+  animation-delay: var(--skill-delay, 0ms);
 }
 
 .skill-icon {
@@ -488,6 +519,17 @@ h1 {
   }
   to {
     transform: translateY(8px);
+  }
+}
+
+@keyframes skillFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
