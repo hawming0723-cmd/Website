@@ -18,14 +18,6 @@
 
 html {
   scroll-behavior: smooth;
-  scrollbar-gutter: stable;
-  overflow-y: scroll;
-  /* Hide default scrollbar */
-  scrollbar-width: none;
-}
-
-html::-webkit-scrollbar {
-  display: none;
 }
 
 body {
@@ -38,51 +30,6 @@ body {
   color: var(--text);
   overflow-x: hidden;
   cursor: none;
-  animation: backgroundPulse 3s ease-in-out infinite;
-}
-
-@keyframes backgroundPulse {
-  0% {
-    background:
-      radial-gradient(circle at top left, rgba(255, 122, 24, 0.15), transparent 28%),
-      radial-gradient(circle at top right, rgba(255, 155, 61, 0.1), transparent 24%),
-      linear-gradient(180deg, #0b0b0b 0%, #050505 55%, #090909 100%);
-  }
-  50% {
-    background:
-      radial-gradient(circle at top left, rgba(255, 122, 24, 0.35), transparent 28%),
-      radial-gradient(circle at top right, rgba(255, 155, 61, 0.28), transparent 24%),
-      linear-gradient(180deg, #0b0b0b 0%, #050505 55%, #090909 100%);
-  }
-  100% {
-    background:
-      radial-gradient(circle at top left, rgba(255, 122, 24, 0.15), transparent 28%),
-      radial-gradient(circle at top right, rgba(255, 155, 61, 0.1), transparent 24%),
-      linear-gradient(180deg, #0b0b0b 0%, #050505 55%, #090909 100%);
-  }
-}
-
-.custom-scrollbar {
-  position: fixed;
-  right: 12px;
-  top: 0;
-  width: 6px;
-  height: 100vh;
-  background: rgba(255, 122, 24, 0.1);
-  border-radius: 3px;
-  z-index: 9998;
-  pointer-events: none;
-}
-
-.scrollbar-thumb {
-  position: absolute;
-  width: 100%;
-  height: 120px;
-  background: linear-gradient(180deg, var(--accent), var(--accent-strong));
-  border-radius: 3px;
-  box-shadow: 0 0 12px rgba(255, 122, 24, 0.4);
-  transition: box-shadow 200ms ease;
-  top: 0;
 }
 
 .custom-cursor {
@@ -134,16 +81,7 @@ a {
     rgba(6, 6, 6, 0.9);
   box-shadow: var(--shadow);
   padding: 24px;
-  animation: floatHero 10s ease-in-out infinite alternate, heroGlow 3s ease-in-out infinite;
-}
-
-@keyframes heroGlow {
-  0%, 100% {
-    box-shadow: var(--shadow);
-  }
-  50% {
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 60px rgba(255, 122, 24, 0.25);
-  }
+  animation: floatHero 10s ease-in-out infinite alternate;
 }
 
 .hero::before,
@@ -485,8 +423,8 @@ h1 {
 }
 
 .skill-category.visible .skill-pill {
-  animation: skillFadeIn 600ms cubic-bezier(0.2, 0.75, 0.2, 1) both;
-  animation-delay: var(--skill-delay, 0ms);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .skill-icon {
@@ -550,17 +488,6 @@ h1 {
   }
   to {
     transform: translateY(8px);
-  }
-}
-
-@keyframes skillFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
