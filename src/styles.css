@@ -38,6 +38,28 @@ body {
   color: var(--text);
   overflow-x: hidden;
   cursor: none;
+  animation: backgroundPulse 3s ease-in-out infinite;
+}
+
+@keyframes backgroundPulse {
+  0% {
+    background:
+      radial-gradient(circle at top left, rgba(255, 122, 24, 0.15), transparent 28%),
+      radial-gradient(circle at top right, rgba(255, 155, 61, 0.1), transparent 24%),
+      linear-gradient(180deg, #0b0b0b 0%, #050505 55%, #090909 100%);
+  }
+  50% {
+    background:
+      radial-gradient(circle at top left, rgba(255, 122, 24, 0.35), transparent 28%),
+      radial-gradient(circle at top right, rgba(255, 155, 61, 0.28), transparent 24%),
+      linear-gradient(180deg, #0b0b0b 0%, #050505 55%, #090909 100%);
+  }
+  100% {
+    background:
+      radial-gradient(circle at top left, rgba(255, 122, 24, 0.15), transparent 28%),
+      radial-gradient(circle at top right, rgba(255, 155, 61, 0.1), transparent 24%),
+      linear-gradient(180deg, #0b0b0b 0%, #050505 55%, #090909 100%);
+  }
 }
 
 .custom-scrollbar {
@@ -112,7 +134,16 @@ a {
     rgba(6, 6, 6, 0.9);
   box-shadow: var(--shadow);
   padding: 24px;
-  animation: floatHero 10s ease-in-out infinite alternate;
+  animation: floatHero 10s ease-in-out infinite alternate, heroGlow 3s ease-in-out infinite;
+}
+
+@keyframes heroGlow {
+  0%, 100% {
+    box-shadow: var(--shadow);
+  }
+  50% {
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 60px rgba(255, 122, 24, 0.25);
+  }
 }
 
 .hero::before,
