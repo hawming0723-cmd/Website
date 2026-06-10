@@ -103,7 +103,7 @@ function App() {
         <nav className="topbar">
           <div className="brand">
             <span className="brand-mark" />
-            <span>Portfolio</span>
+            <span></span>
           </div>
           <a className="nav-link" href="mailto:hawming0723@gmail.com" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
             Let’s connect
@@ -112,7 +112,6 @@ function App() {
 
         <div className="hero-grid">
           <section className="hero-copy">
-            <p className="eyebrow">Republic Polytechnic • Digital Design and Development</p>
             <h1>
               Hi, I'm <span className="name-highlight">HAW MING</span>, a fresh graduate web developer building sharp digital experiences.
             </h1>
