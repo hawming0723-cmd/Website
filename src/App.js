@@ -67,15 +67,19 @@ useEffect(() => {
           const pills = entry.target.querySelectorAll('.skill-pill');
           pills.forEach((pill, i) => {
             pill.style.transitionDelay = `${i * 180}ms`;
-          });
-        } else {
-          entry.target.classList.remove('visible');
 
-          const pills = entry.target.querySelectorAll('.skill-pill');
-          pills.forEach((pill) => {
-            pill.style.transitionDelay = '0ms';
+            setTimeout(() => {
+              pill.style.transitionDelay = '0ms';
+            }, i * 180 + 500);
           });
-        }
+          } else {
+            entry.target.classList.remove('visible');
+
+            const pills = entry.target.querySelectorAll('.skill-pill');
+            pills.forEach((pill) => {
+              pill.style.transitionDelay = '0ms';
+            });
+          }
       });
     },
     { threshold: 0.2 }
@@ -110,6 +114,8 @@ useEffect(() => {
   }, []);
 
   useEffect(() => {
+  const MIN_SPEED = 0.1;
+  const MAX_SPEED = 0.35;
   const canvas = document.createElement('canvas');
   canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;';
   document.body.appendChild(canvas);
@@ -127,9 +133,9 @@ useEffect(() => {
     x: Math.random() * window.innerWidth,
     y: Math.random() * window.innerHeight,
     size: 1 + Math.random() * 0.75,
-    speed: 0.1 + Math.random() * 0.25,
+    speed: MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED),
     opacity: 0.4 + Math.random() * 1,
-    drift: (Math.random() - 0.5) * 0.3,   
+    drift: (Math.random() - 0.5) * 0.4,   
     hue: 15 + Math.random() * 25
   }));
 
@@ -146,7 +152,7 @@ useEffect(() => {
         p.y = -10;
         p.x = Math.random() * canvas.width;
         p.opacity = 0.2 + Math.random() * 0.7;
-        p.speed = 0.8 + Math.random() * 2.2;
+        p.speed = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
       }
 
       ctx.beginPath();

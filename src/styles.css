@@ -417,7 +417,7 @@ h1 {
   font-size: 1.25rem;
   opacity: 0;
   transform: translateY(12px);
-  transition: transform 600ms ease, opacity 600ms ease, background 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  transition: transform 200ms ease, opacity 500ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
   white-space: nowrap;
 }
 
@@ -442,10 +442,11 @@ h1 {
 }
 
 .skill-pill:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px) scale(1.04);
   background: rgba(255, 122, 24, 0.08);
   border-color: rgba(255, 122, 24, 0.5);
-  box-shadow: 0 12px 28px rgba(255, 122, 24, 0.12);
+  box-shadow: 0 12px 28px rgba(255, 122, 24, 0.15), 0 0 0 1px rgba(255, 122, 24, 0.2);
+  transition: transform 200ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
 }
 
 .project-grid {
