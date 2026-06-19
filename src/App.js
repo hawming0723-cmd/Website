@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState, useRef } from 'react';
 
 const skillCategories = {
   frontend: [
@@ -53,64 +53,77 @@ const projects = [
 ];
 
 function App() {
-  const [cursor, setCursor] = useState({ x: 0, y: 0, active: false });
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-useEffect(() => {
-  const elements = document.querySelectorAll('.section, .skill-category');
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-
-          const pills = entry.target.querySelectorAll('.skill-pill');
-          pills.forEach((pill, i) => {
-            pill.style.transitionDelay = `${i * 180}ms`;
-
-            setTimeout(() => {
-              pill.style.transitionDelay = '0ms';
-            }, i * 180 + 500);
-          });
-          } else {
-            entry.target.classList.remove('visible');
-
-            const pills = entry.target.querySelectorAll('.skill-pill');
-            pills.forEach((pill) => {
-              pill.style.transitionDelay = '0ms';
-            });
-          }
-      });
-    },
-    { threshold: 0.2 }
-  );
-
-  elements.forEach((element) => observer.observe(element));
-  return () => observer.disconnect();
-}, []);
+  const cursorRef = useRef(null);
+  const thumbRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = window.scrollY / scrollHeight;
-      setScrollProgress(scrolled)
-    };
+    const elements = document.querySelectorAll('.section, .skill-category');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+            const pills = entry.target.querySelectorAll('.skill-pill');
+            pills.forEach((pill, i) => {
+              pill.style.transitionDelay = `${i * 180}ms`;
+
+              setTimeout(() => {
+                pill.style.transitionDelay = '0ms';
+              }, i * 180 + 500);
+            });
+            } else {
+              entry.target.classList.remove('visible');
+
+              const pills = entry.target.querySelectorAll('.skill-pill');
+              pills.forEach((pill) => {
+                pill.style.transitionDelay = '0ms';
+              });
+            }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    const handleMouseMove = (event) => {
-      setCursor((current) => ({
-        x: event.clientX,
-        y: event.clientY,
-        active: current.active
-      }));
+    const handleScroll = () => {
+      if (!thumbRef.current) return;
+
+      const scrollHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+      const scrolled = window.scrollY / scrollHeight;
+
+      thumbRef.current.style.top =
+        `${scrolled * (window.innerHeight - 120)}px`;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    handleScroll();
+
+    return () =>
+      window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (cursorRef.current) {
+        cursorRef.current.style.transform =
+          `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   useEffect(() => {
@@ -172,17 +185,25 @@ useEffect(() => {
   };
 }, []);
 
-  const activateCursor = () => setCursor((current) => ({ ...current, active: true }));
-  const deactivateCursor = () => setCursor((current) => ({ ...current, active: false }));
+  const activateCursor = () => {
+    cursorRef.current?.classList.add('active');
+  };
+
+  const deactivateCursor = () => {
+    cursorRef.current?.classList.remove('active');
+  };
 
   return (
     <div className="page-shell">
       <div className="custom-scrollbar">
-        <div className="scrollbar-thumb" style={{ top: scrollProgress !== 0 ? `${scrollProgress * (window.innerHeight - 120)}px` : '0px' }} />
+       <div
+        ref={thumbRef}
+        className="scrollbar-thumb" 
+      />
       </div>
       <div
-        className={`custom-cursor ${cursor.active ? 'active' : ''}`}
-        style={{ left: cursor.x, top: cursor.y }}
+        ref={cursorRef}
+        className="custom-cursor"
       />
       <header className="hero">
         <nav className="topbar">

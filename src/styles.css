@@ -39,7 +39,7 @@ body {
   border: 2px solid rgba(255, 122, 24, 0.9);
   transform: translate(-50%, -50%);
   pointer-events: none;
-  transition: width 200ms ease, height 200ms ease, background 200ms ease, transform 200ms ease, opacity 200ms ease;
+  transition: width 200ms ease, height 200ms ease, background 200ms ease, opacity 200ms ease;
   opacity: 0.9;
   mix-blend-mode: difference;
   z-index: 9999;
@@ -570,4 +570,27 @@ h1 {
     transform: translateY(0);
     filter: blur(0);
   }
+}
+
+
+.hero,
+.info-card,
+.project-card,
+.contact-section,
+.button,
+.skill-pill {
+  box-shadow: none !important;
+}
+
+.hero,
+.hero-copy,
+.info-card,
+.project-card,
+.contact-section {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.hero {
+  animation: none !important;
 }
