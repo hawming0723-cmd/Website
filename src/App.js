@@ -239,7 +239,6 @@ function App() {
       <main>
         <section className="section" id="about">
           <div className="section-heading">
-            <p className="eyebrow">About me</p>
             <h2>Clean visuals, thoughtful interaction, and practical execution.</h2>
           </div>
           <div className="about-grid">
