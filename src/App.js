@@ -11,11 +11,15 @@ const skillCategories = {
   backend: [
     { name: 'Node.js', icon: '/logos/NodeJS.png' },
     { name: 'Express.js', icon: '/logos/ExpressJS.png' },
-    { name: 'MERN Stack', icon: '/logos/MernStack.png' }
+    { name: 'Full Stack Development', icon: '/logos/MernStack.png' }
   ],
   database: [
     { name: 'MySQL', icon: '/logos/MySQL.png' },
     { name: 'MongoDB', icon: '/logos/MongoDB.png' }
+  ],
+  languages: [
+    { name: 'Python', icon: '/logos/python.png' },
+    { name: 'JavaScript', icon: '/logos/JavaScript.png' }
   ]
 };
 
@@ -37,18 +41,27 @@ const highlights = [
   }
 ];
 
+const experiences = [
+  {
+    title: 'IT Intern',
+    company: 'Singapore Aero Support Services',
+    dateRange: '03/2025 – 08/2025',
+    bullets: [
+      'Provided technical support for IT-related issues, contributing to the smooth operation of systems',
+      'Handled customer orders efficiently and provided friendly service',
+      'Contributed to the development of a VR environment for cabin training, enhancing learning effectiveness'
+    ],
+    tags: ['Technical Support', 'VR Development', 'Customer Service']
+  }
+];
+
 const projects = [
   {
-    name: 'Landing page systems',
-    detail: 'Bold hero sections, clear hierarchy, and conversion-friendly layouts for modern brands.'
-  },
-  {
-    name: 'Interactive dashboards',
-    detail: 'Readable data views with polished cards, filters, and responsive states.'
-  },
-  {
-    name: 'Student and business apps',
-    detail: 'Practical interfaces that balance usability, structure, and visual identity.'
+    name: 'StartHobby',
+    role: 'Backend Developer',
+    description: 'Full-stack web application (FYP). Collaborated to develop a hobby-sharing platform with backend using Node.js, Express.js, and MySQL. Built RESTful APIs, managed database operations, deployed on Railway, and coordinated via Git.',
+    tags: ['Node.js', 'Express.js', 'MySQL', 'RESTful APIs', 'Railway', 'Git'],
+    githubUrl: 'https://github.com/jihuenyee/StartHobby/tree/master/server'
   }
 ];
 
@@ -142,7 +155,8 @@ function App() {
   resize();
   window.addEventListener('resize', resize);
 
-  const particles = Array.from({ length: 40 }, () => ({
+  //amount of particles aand their properties
+  const particles = Array.from({ length: 50 }, () => ({
     x: Math.random() * window.innerWidth,
     y: Math.random() * window.innerHeight,
     size: 1 + Math.random() * 0.75,
@@ -160,7 +174,7 @@ function App() {
       p.y += p.speed;
       p.x += p.drift;
 
-      // reset to top when it falls off bottom
+      //reset to top when it falls off bottom
       if (p.y > canvas.height + 10) {
         p.y = -10;
         p.x = Math.random() * canvas.width;
@@ -222,7 +236,7 @@ function App() {
               Hi, I'm <span className="name-highlight">HAW MING</span>, a fresh graduate web developer building sharp digital experiences.
             </h1>
             <p className="lede">
-              I'm passionate about creating polished websites and applications that look premium, feel intuitive, and work well across devices.
+              I'm interested in creating websites and applications that look premium, feel intuitive, and work well across devices.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#about" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
@@ -289,22 +303,86 @@ function App() {
                 ))}
               </div>
             </div>
+            <div className="skill-category">
+              <h3 className="category-title">LANGUAGES</h3>
+              <div className="skill-cloud">
+                {skillCategories.languages.map((skill, index) => (
+                  <span className="skill-pill" key={skill.name} style={{ '--skill-delay': `${index * 200}ms` }} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+                    <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                    <span className="skill-name">{skill.name}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
         <section className="section">
           <div className="section-heading">
-            <p className="eyebrow">What I can build</p>
-            <h2>Project directions that fit my strengths</h2>
+            <p className="eyebrow">Experience</p>
+            <h2>My Work Experience</h2>
           </div>
-          <div className="project-grid">
-            {projects.map((project, index) => (
-              <article className="project-card" key={project.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                <p className="project-index">0{index + 1}</p>
-                <h3>{project.name}</h3>
-                <p>{project.detail}</p>
+          <div className="experience-grid">
+            {experiences.map((experience, index) => (
+              <article className="experience-card" key={experience.company} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+                <div className="experience-header">
+                  <div>
+                    <h3 className="experience-title">{experience.title}</h3>
+                    <p className="experience-company">{experience.company}</p>
+                  </div>
+                  <p className="experience-date">{experience.dateRange}</p>
+                </div>
+                <ul className="experience-bullets">
+                  {experience.bullets.map((bullet, i) => (
+                    <li key={i}>{bullet}</li>
+                  ))}
+                </ul>
+                <div className="experience-tags">
+                  {experience.tags.map((tag, i) => (
+                    <span key={i} className="tag">{tag}</span>
+                  ))}
+                </div>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="section-heading">
+            <p className="eyebrow">Projects</p>
+            <h2>My Projects</h2>
+          </div>
+          <div className="projects-grid">
+            {projects.map((project) => (
+              <article className="project-showcase-card" key={project.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+                <div className="project-header">
+                  <h3 className="project-name">{project.name}</h3>
+                  <p className="project-role">{project.role}</p>
+                </div>
+                <p className="project-description">{project.description}</p>
+                <div className="project-tags">
+                  {project.tags.map((tag, i) => (
+                    <span key={i} className="project-tag">{tag}</span>
+                  ))}
+                </div>
+                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="github-button" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+                  <img src="/logos/github.png" alt="GitHub" className="github-icon" />
+                  <span>Code</span>
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="section-heading">
+            <p className="eyebrow">Writing</p>
+            <h2>Thoughts and Articles</h2>
+          </div>
+          <div className="writing-grid">
+            <article className="writing-card" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+              <p className="writing-placeholder">Coming soon...</p>
+            </article>
           </div>
         </section>
 
