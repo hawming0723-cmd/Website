@@ -783,10 +783,10 @@ h1 {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .page-shell {
     width: min(100% - 18px, 1180px);
-    padding-top: 10px;
+    padding: 10px 0 40px;
   }
 
   .hero,
@@ -795,34 +795,161 @@ h1 {
   }
 
   .hero {
-    padding: 18px;
+    padding: 16px;
   }
 
   .topbar {
-    margin-bottom: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .nav-link {
+    padding: 10px 14px;
   }
 
   .hero-copy {
-    padding: 30px 16px 26px;
-    text-align: center;
+    padding: 24px 16px 22px;
+    text-align: left;
   }
 
-  .lede {
-    margin-left: auto;
-    margin-right: auto;
+  .hero-label,
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
   }
 
   .hero-actions {
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .button {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 18px;
+  }
+
+  .lede {
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 0.98rem;
+    line-height: 1.7;
   }
 
   h1 {
-    font-size: clamp(2.6rem, 14vw, 4.2rem);
+    font-size: clamp(2.45rem, 10vw, 3.5rem);
+    max-width: none;
   }
+
+  .section {
+    margin-top: 18px;
+    padding: 16px 0;
+  }
+
+  .section-heading {
+    margin-bottom: 16px;
+  }
+
+  .section-heading h2 {
+    max-width: none;
+  }
+
+  .about-grid,
+  .project-grid,
+  .projects-grid,
+  .writing-grid,
+  .experience-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
   .info-card,
   .project-card,
+  .experience-card,
+  .writing-card,
+  .project-showcase-card,
   .contact-section {
     padding: 20px;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .experience-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .experience-date {
+    margin-left: 0;
+    white-space: normal;
+  }
+
+  .experience-bullets li {
+    font-size: 0.92rem;
+  }
+
+  .project-showcase-card {
+    min-height: auto;
+    gap: 14px;
+  }
+
+  .skill-cloud {
+    gap: 10px;
+  }
+
+  .skills-grid {
+    gap: 28px;
+  }
+
+  .skill-category {
+    gap: 14px;
+  }
+
+  .skill-pill {
+    width: 100%;
+    justify-content: center;
+    padding: 20px 22px;
+    font-size: 1.05rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .skill-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .contact-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .contact-section p {
+    max-width: none;
+  }
+
+  .github-button {
+    justify-content: center;
+  }
+
+  .project-name,
+  .project-description,
+  .experience-title,
+  .experience-company,
+  .category-title,
+  .skill-name,
+  .writing-placeholder,
+  .contact-section h2,
+  .contact-section p {
+    overflow-wrap: anywhere;
   }
 }
 
