@@ -497,25 +497,32 @@ h1 {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 30px;
   letter-spacing: 0.02em;
 }
 
 .project-showcase-card {
-  padding: 24px;
-  background: rgba(16, 16, 16, 0.4);
-  border: 1.5px solid rgba(255, 122, 24, 0.2);
-  border-radius: 16px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 122, 24, 0.1);
-  transform: translateY(14px);
-  opacity: 0;
-  transition: transform 600ms ease, opacity 600ms ease, box-shadow 200ms ease, border-color 200ms ease, background 200ms ease;
+  min-height: 240px;
+  padding: 28px 24px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.08),
+    rgba(255,122,24,0.04)
+  );
+
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
+
+  transition: transform .3s ease,
+              border-color .3s ease,
+              background .3s ease,
+              box-shadow .3s ease;
 }
 
 .section.visible .project-showcase-card {
@@ -853,4 +860,16 @@ h1 {
 
 .hero {
   animation: none !important;
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .project-showcase-card {
+    min-height: auto;
+    padding: 20px;
+  }
 }
