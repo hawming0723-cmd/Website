@@ -374,18 +374,6 @@ function App() {
           </div>
         </section>
 
-        <section className="section">
-          <div className="section-heading">
-            <p className="eyebrow">Writing</p>
-            <h2>Thoughts and Articles</h2>
-          </div>
-          <div className="writing-grid">
-            <article className="writing-card" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-              <p className="writing-placeholder">Coming soon...</p>
-            </article>
-          </div>
-        </section>
-
         <section className="section contact-section" id="contact">
           <div>
             <p className="eyebrow">Contact</p>
