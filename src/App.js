@@ -59,7 +59,7 @@ const projects = [
   {
     name: 'StartHobby',
     role: 'Backend Developer',
-    description: 'Full-stack web application (FYP). Collaborated to develop a hobby-sharing platform with backend using Node.js, Express.js, and MySQL. Built RESTful APIs, managed database operations, deployed on Railway, and coordinated via Git.',
+    description: 'Full-stack web application (FYP). Collaborated to develop a hobby-sharing platform with a backend built using Node.js, Express.js, and MySQL. Developed RESTful APIs, implemented CRUD operations for database management, handled data processing, deployed the application on Railway, and coordinated development using Git.',
     tags: ['Node.js', 'Express.js', 'MySQL', 'RESTful APIs', 'Railway', 'Git'],
     githubUrl: 'https://github.com/jihuenyee/StartHobby/tree/master/server'
   }
