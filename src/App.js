@@ -352,9 +352,9 @@ function App() {
             <p className="eyebrow">Projects</p>
             <h2>My Projects</h2>
           </div>
-          <div className="projects-grid">
+          <div className="project-grid">
             {projects.map((project) => (
-              <article className="project-showcase-card" key={project.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+              <article className="project-card" key={project.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
                 <div className="project-header">
                   <h3 className="project-name">{project.name}</h3>
                   <p className="project-role">{project.role}</p>
