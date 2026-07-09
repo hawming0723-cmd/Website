@@ -18,7 +18,7 @@ const skillCategories = {
     { name: 'MongoDB', icon: '/logos/MongoDB.png' }
   ],
   languages: [
-    { name: 'Python', icon: '/logos/python.png' },
+    { name: 'Python', icon: '/logos/Python.png' },
     { name: 'JavaScript', icon: '/logos/JavaScript.png' }
   ]
 };
