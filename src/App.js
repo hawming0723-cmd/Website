@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState, useRef } from 'react';
+﻿﻿import React, { useEffect, useRef } from 'react';
 
 const skillCategories = {
   frontend: [
@@ -25,20 +25,23 @@ const skillCategories = {
 
 const highlights = [
   {
-    title: 'Design-minded builder',
-    description:
-      'I turn visual ideas into responsive interfaces that feel modern, fast, and easy to use.'
+    title: 'Design-first web UI',
+    description: 'I craft interfaces that feel polished, clear, and fast.'
   },
   {
-    title: 'Frontend + full-stack foundation',
-    description:
-      'My skills covers React, Node.js, and the MERN stack, so I can work from interface to backend flow.'
+    title: 'React + Node.js',
+    description: 'I build web apps with modern front-end and backend tools.'
   },
   {
-    title: 'Business-aware thinking',
-    description:
-      'I also bring a bit of business analytics into my process, which helps me design with users and goals in mind.'
+    title: 'User-focused delivery',
+    description: 'I design with clarity and practical outcomes in mind.'
   }
+];
+
+const quickStats = [
+  { label: 'Base', value: 'Singapore' },
+  { label: 'Focus', value: 'Web Development' },
+  { label: 'Ready', value: 'Open to opportunities' }
 ];
 
 const experiences = [
@@ -47,11 +50,11 @@ const experiences = [
     company: 'Singapore Aero Support Services',
     dateRange: '03/2025 – 08/2025',
     bullets: [
-      'Provided technical support for IT-related issues, contributing to the smooth operation of systems',
-      'Handled customer orders efficiently and provided friendly service',
-      'Contributed to the development of a VR environment for cabin training, enhancing learning effectiveness'
+      'Supported IT operations and user systems.',
+      'Handled orders and service requests.',
+      'Helped build a VR training environment.'
     ],
-    tags: ['Technical Support', 'VR Development', 'Customer Service']
+    tags: ['IT Support', 'VR', 'Service']
   }
 ];
 
@@ -59,8 +62,8 @@ const projects = [
   {
     name: 'StartHobby',
     role: 'Backend Developer',
-    description: 'Full-stack web application (FYP). Collaborated to develop a hobby-sharing platform with a backend built using Node.js, Express.js, and MySQL. Developed RESTful APIs, implemented CRUD operations for database management, handled data processing, deployed the application on Railway, and coordinated development using Git.',
-    tags: ['Node.js', 'Express.js', 'MySQL', 'RESTful APIs', 'Railway', 'Git'],
+    description: 'A hobby-sharing web app built with Node.js, Express, and MySQL. I worked on backend APIs and data flow.',
+    tags: ['Node.js', 'Express', 'MySQL', 'APIs', 'Railway', 'Git'],
     githubUrl: 'https://github.com/jihuenyee/StartHobby/tree/master/server'
   }
 ];
@@ -79,20 +82,20 @@ function App() {
 
             const pills = entry.target.querySelectorAll('.skill-pill');
             pills.forEach((pill, i) => {
-              pill.style.transitionDelay = `${i * 180}ms`;
+              pill.style.transitionDelay = `${i * 140}ms`;
 
               setTimeout(() => {
                 pill.style.transitionDelay = '0ms';
-              }, i * 180 + 500);
+              }, i * 140 + 500);
             });
-            } else {
-              entry.target.classList.remove('visible');
+          } else {
+            entry.target.classList.remove('visible');
 
-              const pills = entry.target.querySelectorAll('.skill-pill');
-              pills.forEach((pill) => {
-                pill.style.transitionDelay = '0ms';
-              });
-            }
+            const pills = entry.target.querySelectorAll('.skill-pill');
+            pills.forEach((pill) => {
+              pill.style.transitionDelay = '0ms';
+            });
+          }
         });
       },
       { threshold: 0.2 }
@@ -111,93 +114,85 @@ function App() {
         document.documentElement.clientHeight;
 
       const scrolled = window.scrollY / scrollHeight;
-
-      thumbRef.current.style.top =
-        `${scrolled * (window.innerHeight - 120)}px`;
+      thumbRef.current.style.top = `${scrolled * (window.innerHeight - 120)}px`;
     };
 
     window.addEventListener('scroll', handleScroll);
-
     handleScroll();
 
-    return () =>
-      window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (cursorRef.current) {
-        cursorRef.current.style.transform =
-          `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+        cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
       }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   useEffect(() => {
-  const MIN_SPEED = 0.1;
-  const MAX_SPEED = 0.35;
-  const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;';
-  document.body.appendChild(canvas);
+    const MIN_SPEED = 0.1;
+    const MAX_SPEED = 0.35;
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;';
+    document.body.appendChild(canvas);
 
-  const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
 
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
 
-  //amount of particles aand their properties
-  const particles = Array.from({ length: 50 }, () => ({
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
-    size: 1 + Math.random() * 0.75,
-    speed: MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED),
-    opacity: 0.4 + Math.random() * 1,
-    drift: (Math.random() - 0.5) * 0.4,   
-    hue: 15 + Math.random() * 25
-  }));
+    resize();
+    window.addEventListener('resize', resize);
 
-  let animId;
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const particles = Array.from({ length: 50 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      size: 1 + Math.random() * 0.75,
+      speed: MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED),
+      opacity: 0.4 + Math.random() * 1,
+      drift: (Math.random() - 0.5) * 0.4,
+      hue: 15 + Math.random() * 25
+    }));
 
-    particles.forEach(p => {
-      p.y += p.speed;
-      p.x += p.drift;
+    let animId;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      //reset to top when it falls off bottom
-      if (p.y > canvas.height + 10) {
-        p.y = -10;
-        p.x = Math.random() * canvas.width;
-        p.opacity = 0.2 + Math.random() * 0.7;
-        p.speed = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
-      }
+      particles.forEach((p) => {
+        p.y += p.speed;
+        p.x += p.drift;
 
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.opacity})`;
-      ctx.fill();
-    });
+        if (p.y > canvas.height + 10) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
+          p.opacity = 0.2 + Math.random() * 0.7;
+          p.speed = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.opacity})`;
+        ctx.fill();
+      });
+
+      animId = requestAnimationFrame(draw);
+    }
 
     animId = requestAnimationFrame(draw);
-  }
-  animId = requestAnimationFrame(draw);
 
-  return () => {
-    cancelAnimationFrame(animId);
-    window.removeEventListener('resize', resize);
-    document.body.removeChild(canvas);
-  };
-}, []);
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', resize);
+      document.body.removeChild(canvas);
+    };
+  }, []);
 
   const activateCursor = () => {
     cursorRef.current?.classList.add('active');
@@ -210,33 +205,34 @@ function App() {
   return (
     <div className="page-shell">
       <div className="custom-scrollbar">
-       <div
-        ref={thumbRef}
-        className="scrollbar-thumb" 
-      />
+        <div ref={thumbRef} className="scrollbar-thumb" />
       </div>
-      <div
-        ref={cursorRef}
-        className="custom-cursor"
-      />
+      <div ref={cursorRef} className="custom-cursor" />
+
       <header className="hero">
         <nav className="topbar">
           <div className="brand">
             <span className="brand-mark" />
-            <span></span>
+            <span>HAW MING</span>
           </div>
-          <a className="nav-link" href="mailto:hawming0723@gmail.com" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-            Let’s connect
-          </a>
+          <div className="topbar-actions">
+            <a className="chip-link" href="#work" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+              Selected work
+            </a>
+            <a className="nav-link" href="mailto:hawming0723@gmail.com" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+              Let’s connect
+            </a>
+          </div>
         </nav>
 
         <div className="hero-grid">
           <section className="hero-copy">
+            <p className="hero-badge">Web development • Singapore based</p>
             <h1>
-              Hi, I'm <span className="name-highlight">HAW MING</span>, a fresh graduate web developer building sharp digital experiences.
+              Hi, I’m <span className="name-highlight">HAW MING</span>. I focus on web development that feels polished, fast, and clear.
             </h1>
             <p className="lede">
-              I'm interested in creating websites and applications that look premium, feel intuitive, and work well across devices.
+              I’m a fresh graduate in Digital Design and Development, building responsive web apps with clean interfaces and strong front-end code.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#about" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
@@ -246,6 +242,14 @@ function App() {
                 Contact
               </a>
             </div>
+            <div className="hero-stats">
+              {quickStats.map((stat) => (
+                <div className="stat-card" key={stat.label}>
+                  <span className="stat-label">{stat.label}</span>
+                  <strong>{stat.value}</strong>
+                </div>
+              ))}
+            </div>
           </section>
         </div>
       </header>
@@ -253,6 +257,7 @@ function App() {
       <main>
         <section className="section" id="about">
           <div className="section-heading">
+            <p className="eyebrow">About</p>
             <h2>Clean visuals, thoughtful interaction, and practical execution.</h2>
           </div>
           <div className="about-grid">
@@ -265,65 +270,58 @@ function App() {
           </div>
         </section>
 
-        <section className="section">
-          <div className="stack-header">
-            <p className="eyebrow">My Skills</p>
-          </div>
-          <div className="skills-grid">
-            <div className="skill-category">
-              <h3 className="category-title">FRONTEND</h3>
-              <div className="skill-cloud">
-                {skillCategories.frontend.map((skill, index) => (
-                  <span className="skill-pill" key={skill.name} style={{ '--skill-delay': `${index * 200}ms` }} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                    <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                    <span className="skill-name">{skill.name}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="skill-category">
-              <h3 className="category-title">BACKEND</h3>
-              <div className="skill-cloud">
-                {skillCategories.backend.map((skill, index) => (
-                  <span className="skill-pill" key={skill.name} style={{ '--skill-delay': `${index * 200}ms` }} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                    <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                    <span className="skill-name">{skill.name}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="skill-category">
-              <h3 className="category-title">DATABASE</h3>
-              <div className="skill-cloud">
-                {skillCategories.database.map((skill, index) => (
-                  <span className="skill-pill" key={skill.name} style={{ '--skill-delay': `${index * 200}ms` }} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                    <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                    <span className="skill-name">{skill.name}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="skill-category">
-              <h3 className="category-title">LANGUAGES</h3>
-              <div className="skill-cloud">
-                {skillCategories.languages.map((skill, index) => (
-                  <span className="skill-pill" key={skill.name} style={{ '--skill-delay': `${index * 200}ms` }} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                    <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                    <span className="skill-name">{skill.name}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
+        <section className="section spotlight-section">
+          <article className="spotlight-card" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+            <p className="eyebrow">Design approach</p>
+            <h3>Working with intention from concept to final polish.</h3>
+            <p>My process blends visual thinking, product awareness, and front-end craft so interfaces feel not just beautiful, but useful.</p>
+          </article>
+
+          <article className="spotlight-card compact-card" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
+            <p className="eyebrow">Core strengths</p>
+            <ul className="bullet-list">
+              {['Responsive UI development', 'Modern component styling', 'Full-stack prototyping'].map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
         </section>
 
         <section className="section">
+          <div className="stack-header">
+            <p className="eyebrow">My Skills</p>
+            <h2 className="section-title">My Skills</h2>
+          </div>
+          <div className="skills-grid">
+            {Object.entries(skillCategories).map(([categoryKey, skills]) => (
+              <div className="skill-category" key={categoryKey}>
+                <h3 className="category-title">{categoryKey.toUpperCase()}</h3>
+                <div className="skill-cloud">
+                  {skills.map((skill, index) => (
+                    <span
+                      className="skill-pill"
+                      key={skill.name}
+                      style={{ '--skill-delay': `${index * 180}ms` }}
+                      onMouseEnter={activateCursor}
+                      onMouseLeave={deactivateCursor}
+                    >
+                      <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                      <span className="skill-name">{skill.name}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="section" id="work">
           <div className="section-heading">
             <p className="eyebrow">Experience</p>
-            <h2>My Work Experience</h2>
+            <h2>My Experience</h2>
           </div>
           <div className="experience-grid">
-            {experiences.map((experience, index) => (
+            {experiences.map((experience) => (
               <article className="experience-card" key={experience.company} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
                 <div className="experience-header">
                   <div>
@@ -377,10 +375,8 @@ function App() {
         <section className="section contact-section" id="contact">
           <div>
             <p className="eyebrow">Contact</p>
-            <h2>Let’s build something together.</h2>
-            <p>
-              If you need something that is within my skill set, I’d be happy to help.
-            </p>
+            <h2>Let’s build something thoughtful together.</h2>
+            <p>If you need a polished web experience, I’d be happy to help bring it to life.</p>
           </div>
           <a className="button button-primary" href="mailto:hawming0723@gmail.com">
             Send me an email
