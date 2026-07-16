@@ -554,8 +554,8 @@ h1 {
   gap: 10px;
   padding: 12px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 122, 24, 0.16);
-  background: rgba(255, 255, 255, 0.03);
+  border: none; /* transparent by default */
+  background: transparent;
   font-weight: 600;
   color: var(--text);
   transform: translateY(12px);
@@ -566,6 +566,12 @@ h1 {
 .skill-category.visible .skill-pill {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* reveal outline on hover */
+.skill-pill:hover {
+  border: 1px solid rgba(255, 122, 24, 0.28);
+  background: rgba(255, 122, 24, 0.04);
 }
 
 .skill-icon {
