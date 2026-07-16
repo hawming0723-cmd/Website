@@ -62,7 +62,7 @@ const projects = [
   {
     name: 'StartHobby',
     role: 'Backend Developer',
-    description: 'A hobby-sharing web app built with Node.js, Express, and MySQL. I worked on backend APIs and data flow.',
+    description: 'Final Year Project: Developed the backend of a hobby-sharing web application using Node.js, Express.js, and MySQL. Built APIs and managed data flow.',
     tags: ['Node.js', 'Express', 'MySQL', 'APIs', 'Railway', 'Git'],
     githubUrl: 'https://github.com/jihuenyee/StartHobby/tree/master/server'
   }
