@@ -39,7 +39,7 @@ const highlights = [
 ];
 
 const quickStats = [
-  { label: 'Base', value: 'Singapore' },
+  { label: 'Age', value: '22' },
   { label: 'Focus', value: 'Web Development' },
   { label: 'Ready', value: 'Open to opportunities' }
 ];
@@ -227,7 +227,7 @@ function App() {
 
         <div className="hero-grid">
           <section className="hero-copy">
-            <p className="hero-badge">Web development • Singapore based</p>
+            <p className="hero-badge">Web development</p>
             <h1>
               Hi, I’m <span className="name-highlight">HAW MING</span>. I focus on web development that feels polished, fast, and clear.
             </h1>
