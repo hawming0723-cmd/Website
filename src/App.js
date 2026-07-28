@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 
 const skillCategories = [
   { label: 'Front end', skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Bootstrap'] },
@@ -142,37 +142,29 @@ function App() {
         </section>
 
         <section className="featured-work section-pad" id="work" data-reveal>
-          <div className="section-heading-row"><p className="section-index">02 / SELECTED WORK</p><p>01 — 01</p></div>
-          <article className="project-feature">
-            <div className="project-content">
-              <div><p className="project-number">001</p><h2>{project.name}</h2></div>
-              <div className="project-details"><p>{project.role}</p><p>{project.description}</p><a className="text-link" href={project.githubUrl} target="_blank" rel="noreferrer">View the code <img src="/logos/github.png" alt="GitHub" /></a></div>
+          <div className="section-heading-row">
+            <p className="section-index">02 / SELECTED WORK</p>
+            <p>01 — 01</p>
+          </div>
+
+          <div className="project-content">
+            <div>
+              <p className="project-number">001</p>
+              <h2>{project.name}</h2>
             </div>
-          </article>
-        </section>
 
-        <section className="experience-section section-pad" data-reveal>
-          <div className="section-heading-row"><p className="section-index">03 / EXPERIENCE</p><p>2025</p></div>
-          <article className="experience-card">
-            <div className="experience-title"><h2>{experience.role}</h2><p>{experience.company}</p></div>
-            <p className="experience-date">{experience.dateRange}</p>
-            <ul>{experience.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
-            <div className="tag-list">{experience.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-          </article>
-        </section>
-
-        <section className="skills-section section-pad" data-reveal>
-          <div className="section-heading-row"><p className="section-index">04 / TOOLKIT</p><p>Always learning</p></div>
-          <div className="skills-list">
-            {skillCategories.map(({ label, skills }, index) => (
-              <div className="skill-row" key={label}>
-                <span>0{index + 1}</span>
-                <h3>{label}</h3>
-                <div className="skill-chips">
-                  {skills.map((skill) => <b key={skill}>{skill}</b>)}
-                </div>
-              </div>
-            ))}
+            <div className="project-details">
+              <p>{project.role}</p>
+              <p>{project.description}</p>
+              <a
+                className="text-link"
+                href={project.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View the code <img src="/logos/github.png" alt="GitHub" />
+              </a>
+            </div>
           </div>
         </section>
 
