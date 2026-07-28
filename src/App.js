@@ -161,7 +161,7 @@ function App() {
                 target="_blank"
                 rel="noreferrer"
               >
-                View the code <img src="/logos/github.png" alt="GitHub" />
+                CODE<img src="/logos/github.png" alt="GitHub" />
               </a>
             </div>
           </div>
