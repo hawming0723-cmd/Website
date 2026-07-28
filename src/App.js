@@ -74,69 +74,83 @@ function App() {
 
   useEffect(() => {
     const elements = document.querySelectorAll('.section, .skill-category');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-
-            const pills = entry.target.querySelectorAll('.skill-pill');
-            pills.forEach((pill, i) => {
-              pill.style.transitionDelay = `${i * 140}ms`;
-
-              setTimeout(() => {
-                pill.style.transitionDelay = '0ms';
-              }, i * 140 + 500);
-            });
-          } else {
-            entry.target.classList.remove('visible');
-
-            const pills = entry.target.querySelectorAll('.skill-pill');
-            pills.forEach((pill) => {
-              pill.style.transitionDelay = '0ms';
-            });
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    elements.forEach((element) => element.classList.add('visible'));
   }, []);
 
   useEffect(() => {
+    let frameId = 0;
+    let ticking = false;
+
     const handleScroll = () => {
-      if (!thumbRef.current) return;
+      if (!ticking) {
+        frameId = window.requestAnimationFrame(() => {
+          if (!thumbRef.current) return;
 
-      const scrollHeight =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
+          const scrollHeight =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
 
-      const scrolled = window.scrollY / scrollHeight;
-      thumbRef.current.style.top = `${scrolled * (window.innerHeight - 120)}px`;
-    };
+          if (scrollHeight <= 0) {
+            thumbRef.current.style.top = '0px';
+            ticking = false;
+            return;
+          }
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
+          const scrolled = Math.min(Math.max(window.scrollY / scrollHeight, 0), 1);
+          thumbRef.current.style.top = `${scrolled * (window.innerHeight - 120)}px`;
+          ticking = false;
+        });
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+        ticking = true;
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+    };
   }, []);
 
   useEffect(() => {
-    const MIN_SPEED = 0.1;
-    const MAX_SPEED = 0.35;
+    let frameId = 0;
+    let lastX = 0;
+    let lastY = 0;
+
+    const handleMouseMove = (e) => {
+      lastX = e.clientX;
+      lastY = e.clientY;
+
+      if (!frameId) {
+        frameId = window.requestAnimationFrame(() => {
+          if (cursorRef.current) {
+            cursorRef.current.style.transform = `translate(${lastX}px, ${lastY}px) translate(-50%, -50%)`;
+          }
+          frameId = 0;
+        });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return undefined;
+
+    const MIN_SPEED = 0.025;
+    const MAX_SPEED = 0.08;
+    const frameSkip = 2;
     const canvas = document.createElement('canvas');
     canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;';
     document.body.appendChild(canvas);
@@ -151,36 +165,40 @@ function App() {
     resize();
     window.addEventListener('resize', resize);
 
-    const particles = Array.from({ length: 50 }, () => ({
+    const particles = Array.from({ length: 12 }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      size: 1 + Math.random() * 0.75,
+      size: 1 + Math.random() * 0.6,
       speed: MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED),
-      opacity: 0.4 + Math.random() * 1,
-      drift: (Math.random() - 0.5) * 0.4,
+      opacity: 0.3 + Math.random() * 0.6,
+      drift: (Math.random() - 0.5) * 0.2,
       hue: 15 + Math.random() * 25
     }));
 
     let animId;
+    let frameCount = 0;
     function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      frameCount += 1;
+      if (frameCount % frameSkip === 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particles.forEach((p) => {
-        p.y += p.speed;
-        p.x += p.drift;
+        particles.forEach((p) => {
+          p.y += p.speed;
+          p.x += p.drift;
 
-        if (p.y > canvas.height + 10) {
-          p.y = -10;
-          p.x = Math.random() * canvas.width;
-          p.opacity = 0.2 + Math.random() * 0.7;
-          p.speed = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
-        }
+          if (p.y > canvas.height + 10) {
+            p.y = -10;
+            p.x = Math.random() * canvas.width;
+            p.opacity = 0.15 + Math.random() * 0.35;
+            p.speed = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
+          }
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.opacity})`;
-        ctx.fill();
-      });
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.opacity})`;
+          ctx.fill();
+        });
+      }
 
       animId = requestAnimationFrame(draw);
     }
