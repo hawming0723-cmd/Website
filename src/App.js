@@ -1,403 +1,141 @@
-﻿﻿import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const skillCategories = {
-  frontend: [
-    { name: 'HTML', icon: '/logos/HTML.png' },
-    { name: 'CSS', icon: '/logos/CSS.png' },
-    { name: 'JavaScript', icon: '/logos/JavaScript.png' },
-    { name: 'React', icon: '/logos/React.png' },
-    { name: 'Bootstrap', icon: '/logos/Bootstrap.png' }
+const skillCategories = [
+  { label: 'Front end', skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Bootstrap'] },
+  { label: 'Back end', skills: ['Node.js', 'Express.js', 'REST APIs', 'Full-stack development'] },
+  { label: 'Data', skills: ['MySQL', 'MongoDB'] },
+  { label: 'Languages', skills: ['Python', 'JavaScript'] }
+];
+
+const experience = {
+  role: 'IT Intern',
+  company: 'Singapore Aero Support Services',
+  dateRange: 'Mar 2025 — Aug 2025',
+  bullets: [
+    'Supported day-to-day IT operations and user systems.',
+    'Handled orders and service requests across the business.',
+    'Contributed to a VR training environment for practical learning.'
   ],
-  backend: [
-    { name: 'Node.js', icon: '/logos/NodeJS.png' },
-    { name: 'Express.js', icon: '/logos/ExpressJS.png' },
-    { name: 'Full Stack Development', icon: '/logos/MernStack.png' }
-  ],
-  database: [
-    { name: 'MySQL', icon: '/logos/MySQL.png' },
-    { name: 'MongoDB', icon: '/logos/MongoDB.png' }
-  ],
-  languages: [
-    { name: 'Python', icon: '/logos/Python.png' },
-    { name: 'JavaScript', icon: '/logos/JavaScript.png' }
-  ]
+  tags: ['IT support', 'VR', 'Service']
 };
 
-const highlights = [
-  {
-    title: 'Design-first web UI',
-    description: 'I craft interfaces that feel polished, clear, and fast.'
-  },
-  {
-    title: 'React + Node.js',
-    description: 'I build web apps with modern front-end and backend tools.'
-  },
-  {
-    title: 'User-focused delivery',
-    description: 'I design with clarity and practical outcomes in mind.'
-  }
-];
+const project = {
+  name: 'StartHobby',
+  role: 'Backend developer · Final year project',
+  description: 'A hobby-sharing platform built to make it easier to discover people, interests, and new experiences. I developed the backend, shaped the API layer, and managed data flow.',
+  tags: ['Node.js', 'Express', 'MySQL', 'APIs', 'Railway', 'Git'],
+  githubUrl: 'https://github.com/jihuenyee/StartHobby/tree/master/server'
+};
 
-const quickStats = [
-  { label: 'Age', value: '22' },
-  { label: 'Focus', value: 'Web Development' },
-  { label: 'Ready', value: 'Open to opportunities' }
-];
-
-const experiences = [
-  {
-    title: 'IT Intern',
-    company: 'Singapore Aero Support Services',
-    dateRange: '03/2025 – 08/2025',
-    bullets: [
-      'Supported IT operations and user systems.',
-      'Handled orders and service requests.',
-      'Helped build a VR training environment.'
-    ],
-    tags: ['IT Support', 'VR', 'Service']
-  }
-];
-
-const projects = [
-  {
-    name: 'StartHobby',
-    role: 'Backend Developer',
-    description: 'Final Year Project: Developed the backend of a hobby-sharing web application using Node.js, Express.js, and MySQL. Built APIs and managed data flow.',
-    tags: ['Node.js', 'Express', 'MySQL', 'APIs', 'Railway', 'Git'],
-    githubUrl: 'https://github.com/jihuenyee/StartHobby/tree/master/server'
-  }
-];
+function Arrow() {
+  return <span aria-hidden="true" className="arrow">↗</span>;
+}
 
 function App() {
-  const cursorRef = useRef(null);
-  const thumbRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const elements = document.querySelectorAll('.section, .skill-category');
-    elements.forEach((element) => element.classList.add('visible'));
+    const sections = document.querySelectorAll('[data-reveal]');
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('is-visible')),
+      { threshold: 0.12 }
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    let frameId = 0;
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        frameId = window.requestAnimationFrame(() => {
-          if (!thumbRef.current) return;
-
-          const scrollHeight =
-            document.documentElement.scrollHeight -
-            document.documentElement.clientHeight;
-
-          if (scrollHeight <= 0) {
-            thumbRef.current.style.top = '0px';
-            ticking = false;
-            return;
-          }
-
-          const scrolled = Math.min(Math.max(window.scrollY / scrollHeight, 0), 1);
-          thumbRef.current.style.top = `${scrolled * (window.innerHeight - 120)}px`;
-          ticking = false;
-        });
-
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (frameId) {
-        cancelAnimationFrame(frameId);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    let frameId = 0;
-    let lastX = 0;
-    let lastY = 0;
-
-    const handleMouseMove = (e) => {
-      lastX = e.clientX;
-      lastY = e.clientY;
-
-      if (!frameId) {
-        frameId = window.requestAnimationFrame(() => {
-          if (cursorRef.current) {
-            cursorRef.current.style.transform = `translate(${lastX}px, ${lastY}px) translate(-50%, -50%)`;
-          }
-          frameId = 0;
-        });
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (frameId) {
-        cancelAnimationFrame(frameId);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return undefined;
-
-    const MIN_SPEED = 0.025;
-    const MAX_SPEED = 0.08;
-    const frameSkip = 2;
-    const canvas = document.createElement('canvas');
-    canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;';
-    document.body.appendChild(canvas);
-
-    const ctx = canvas.getContext('2d');
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    resize();
-    window.addEventListener('resize', resize);
-
-    const particles = Array.from({ length: 12 }, () => ({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      size: 1 + Math.random() * 0.6,
-      speed: MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED),
-      opacity: 0.3 + Math.random() * 0.6,
-      drift: (Math.random() - 0.5) * 0.2,
-      hue: 15 + Math.random() * 25
-    }));
-
-    let animId;
-    let frameCount = 0;
-    function draw() {
-      frameCount += 1;
-      if (frameCount % frameSkip === 0) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        particles.forEach((p) => {
-          p.y += p.speed;
-          p.x += p.drift;
-
-          if (p.y > canvas.height + 10) {
-            p.y = -10;
-            p.x = Math.random() * canvas.width;
-            p.opacity = 0.15 + Math.random() * 0.35;
-            p.speed = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
-          }
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.opacity})`;
-          ctx.fill();
-        });
-      }
-
-      animId = requestAnimationFrame(draw);
-    }
-
-    animId = requestAnimationFrame(draw);
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', resize);
-      document.body.removeChild(canvas);
-    };
-  }, []);
-
-  const activateCursor = () => {
-    cursorRef.current?.classList.add('active');
-  };
-
-  const deactivateCursor = () => {
-    cursorRef.current?.classList.remove('active');
-  };
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <div className="page-shell">
-      <div className="custom-scrollbar">
-        <div ref={thumbRef} className="scrollbar-thumb" />
+    <div className="site-shell">
+      <div className="ambient-layer" aria-hidden="true">
+        <i className="ambient-orb ambient-orb--violet" />
+        <i className="ambient-orb ambient-orb--lime" />
+        <i className="ambient-orb ambient-orb--peach" />
       </div>
-      <div ref={cursorRef} className="custom-cursor" />
-
-      <header className="hero">
-        <nav className="topbar">
-          <div className="brand">
-            <span className="brand-mark" />
-          </div>
-          <div className="topbar-actions">
-            <a className="chip-link" href="#work" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-              Selected work
-            </a>
-            <a className="nav-link" href="mailto:hawming0723@gmail.com" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-              Let’s connect
-            </a>
-          </div>
+      <header className="site-header">
+        <a className="wordmark" href="#top" aria-label="Haw Ming home" onClick={closeMenu}>
+          <span>HM</span><i>—</i>
+        </a>
+        <button className="menu-button" type="button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle menu">
+          <span /><span />
+        </button>
+        <nav className={menuOpen ? 'nav-links is-open' : 'nav-links'} aria-label="Main navigation">
+          <a href="#about" onClick={closeMenu}>About</a>
+          <a href="#work" onClick={closeMenu}>Work</a>
+          <a href="#contact" onClick={closeMenu}>Contact <Arrow /></a>
         </nav>
-
-        <div className="hero-grid">
-          <section className="hero-copy">
-            <p className="hero-badge">Web development</p>
-            <h1>
-              Hi, I’m <span className="name-highlight">HAW MING</span>. I focus on web development that feels polished, fast, and clear.
-            </h1>
-            <p className="lede">
-              I’m a fresh graduate in Digital Design and Development, building responsive web apps with clean interfaces and strong front-end code.
-            </p>
-            <div className="hero-actions">
-              <a className="button button-primary" href="#about" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                About me
-              </a>
-              <a className="button button-secondary" href="#contact" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                Contact
-              </a>
-            </div>
-            <div className="hero-stats">
-              {quickStats.map((stat) => (
-                <div className="stat-card" key={stat.label}>
-                  <span className="stat-label">{stat.label}</span>
-                  <strong>{stat.value}</strong>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div>
       </header>
 
-      <main>
-        <section className="section" id="about">
-          <div className="section-heading">
-            <p className="eyebrow">About</p>
-            <h2>Clean visuals, thoughtful interaction, and practical execution.</h2>
+      <main id="top">
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="hero-intro hero-animate hero-animate--one">
+            <p className="kicker"><span className="live-dot" /> Available for opportunities</p>
+            <p className="hero-side-note">Based in<br />Malaysia</p>
           </div>
-          <div className="about-grid">
-            {highlights.map((item) => (
-              <article className="info-card" key={item.title} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </article>
-            ))}
+          <h1 id="hero-title" className="hero-animate hero-animate--two">Digital experiences with<br /><em>clarity</em> &amp; character.</h1>
+          <div className="hero-bottom hero-animate hero-animate--three">
+            <p>I’m <strong>Haw Ming</strong>, a Digital Design &amp; Development graduate crafting thoughtful web experiences from idea to interface.</p>
+          </div>
+          <div className="hero-orbit" aria-hidden="true">
+            <span>DESIGN</span><b>HM</b><span>DEVELOP</span>
           </div>
         </section>
 
-        <section className="section spotlight-section">
-          <article className="spotlight-card" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-            <p className="eyebrow">Design approach</p>
-            <h3>Working with intention from concept to final polish.</h3>
-            <p>My process blends visual thinking, product awareness, and front-end craft so interfaces feel not just beautiful, but useful.</p>
-          </article>
+        <section className="intro-section section-pad" id="about" data-reveal>
+          <p className="section-index">01 / ABOUT</p>
+          <div className="intro-copy">
+            <h2>A curious builder with an eye for the details that make a product feel <em>right.</em></h2>
+            <p>I care about making the useful feel effortless. My work combines visual sensitivity with responsive, practical front-end development—and I enjoy working across the stack when a project calls for it.</p>
+          </div>
+          <div className="principles">
+            <article><span>01</span><h3>Clear by design</h3><p>Simple visual systems that let people focus on what matters.</p></article>
+            <article><span>02</span><h3>Built to respond</h3><p>Interfaces that feel considered on every screen and input.</p></article>
+            <article><span>03</span><h3>Useful first</h3><p>Polish is most powerful when it supports a real outcome.</p></article>
+          </div>
+        </section>
 
-          <article className="spotlight-card compact-card" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-            <p className="eyebrow">Core strengths</p>
-            <ul className="bullet-list">
-              {['Responsive UI development', 'Modern component styling', 'Full-stack prototyping'].map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+        <section className="featured-work section-pad" id="work" data-reveal>
+          <div className="section-heading-row"><p className="section-index">02 / SELECTED WORK</p><p>01 — 01</p></div>
+          <a className="project-feature" href={project.githubUrl} target="_blank" rel="noreferrer">
+            <div className="project-art" aria-hidden="true"><span className="art-label">SH</span><span className="art-circle" /><span className="art-line" /></div>
+            <div className="project-content">
+              <div><p className="project-number">001</p><h2>{project.name}</h2></div>
+              <div className="project-details"><p>{project.role}</p><p>{project.description}</p><span className="text-link">View the code <Arrow /></span></div>
+            </div>
+          </a>
+        </section>
+
+        <section className="experience-section section-pad" data-reveal>
+          <div className="section-heading-row"><p className="section-index">03 / EXPERIENCE</p><p>2025</p></div>
+          <article className="experience-card">
+            <div className="experience-title"><h2>{experience.role}</h2><p>{experience.company}</p></div>
+            <p className="experience-date">{experience.dateRange}</p>
+            <ul>{experience.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
+            <div className="tag-list">{experience.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
           </article>
         </section>
 
-        <section className="section">
-          <div className="stack-header">
-            <p className="eyebrow">My Skills</p>
-            <h2 className="section-title">My Skills</h2>
-          </div>
-          <div className="skills-grid">
-            {Object.entries(skillCategories).map(([categoryKey, skills]) => (
-              <div className="skill-category" key={categoryKey}>
-                <h3 className="category-title">{categoryKey.toUpperCase()}</h3>
-                <div className="skill-cloud">
-                  {skills.map((skill, index) => (
-                    <span
-                      className="skill-pill"
-                      key={skill.name}
-                      style={{ '--skill-delay': `${index * 180}ms` }}
-                      onMouseEnter={activateCursor}
-                      onMouseLeave={deactivateCursor}
-                    >
-                      <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                      <span className="skill-name">{skill.name}</span>
-                    </span>
-                  ))}
+        <section className="skills-section section-pad" data-reveal>
+          <div className="section-heading-row"><p className="section-index">04 / TOOLKIT</p><p>Always learning</p></div>
+          <div className="skills-list">
+            {skillCategories.map(({ label, skills }, index) => (
+              <div className="skill-row" key={label}>
+                <span>0{index + 1}</span>
+                <h3>{label}</h3>
+                <div className="skill-chips">
+                  {skills.map((skill) => <b key={skill}>{skill}</b>)}
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="section" id="work">
-          <div className="section-heading">
-            <p className="eyebrow">Experience</p>
-            <h2>My Experience</h2>
-          </div>
-          <div className="experience-grid">
-            {experiences.map((experience) => (
-              <article className="experience-card" key={experience.company} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                <div className="experience-header">
-                  <div>
-                    <h3 className="experience-title">{experience.title}</h3>
-                    <p className="experience-company">{experience.company}</p>
-                  </div>
-                  <p className="experience-date">{experience.dateRange}</p>
-                </div>
-                <ul className="experience-bullets">
-                  {experience.bullets.map((bullet, i) => (
-                    <li key={i}>{bullet}</li>
-                  ))}
-                </ul>
-                <div className="experience-tags">
-                  {experience.tags.map((tag, i) => (
-                    <span key={i} className="tag">{tag}</span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="section-heading">
-            <p className="eyebrow">Projects</p>
-            <h2>My Projects</h2>
-          </div>
-          <div className="project-grid">
-            {projects.map((project) => (
-              <article className="project-card" key={project.name} onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                <div className="project-header">
-                  <h3 className="project-name">{project.name}</h3>
-                  <p className="project-role">{project.role}</p>
-                </div>
-                <p className="project-description">{project.description}</p>
-                <div className="project-tags">
-                  {project.tags.map((tag, i) => (
-                    <span key={i} className="project-tag">{tag}</span>
-                  ))}
-                </div>
-                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="github-button" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
-                  <img src="/logos/github.png" alt="GitHub" className="github-icon" />
-                  <span>Code</span>
-                </a>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section contact-section" id="contact">
-          <div>
-            <p className="eyebrow">Contact</p>
-            <h2>Let’s build something thoughtful together.</h2>
-            <p>If you need a polished web experience, I’d be happy to help bring it to life.</p>
-          </div>
-          <a className="button button-primary" href="mailto:hawming0723@gmail.com">
-            Send me an email
-          </a>
+        <section className="contact-section" id="contact" data-reveal>
+          <p className="section-index">05 / CONTACT</p>
+          <h2>Have a thoughtful idea?<br /><em>Let’s make it real.</em></h2>
+          <a href="mailto:hawming0723@gmail.com" className="email-link">hawming0723@gmail.com <Arrow /></a>
+          <p className="footer-note">© {new Date().getFullYear()} Haw Ming &nbsp;·&nbsp; Built with intention</p>
         </section>
       </main>
     </div>
