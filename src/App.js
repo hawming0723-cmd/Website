@@ -231,7 +231,6 @@ function App() {
         <nav className="topbar">
           <div className="brand">
             <span className="brand-mark" />
-            <span>HAW MING</span>
           </div>
           <div className="topbar-actions">
             <a className="chip-link" href="#work" onMouseEnter={activateCursor} onMouseLeave={deactivateCursor}>
