@@ -117,7 +117,6 @@ function App() {
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-intro hero-animate hero-animate--one">
             <p className="kicker"><span className="live-dot" /> Available for opportunities</p>
-            <p className="hero-side-note">Based in<br />Malaysia</p>
           </div>
           <h1 id="hero-title" className="hero-animate hero-animate--two">Digital experiences with<br /><em>clarity</em> &amp; character.</h1>
           <div className="hero-bottom hero-animate hero-animate--three">
