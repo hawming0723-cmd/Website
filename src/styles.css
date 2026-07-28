@@ -543,6 +543,7 @@ em {
 
 .skills-list {
     border-top: 1px solid var(--ink);
+    margin-bottom: 250px; 
 }
 
 .skill-row {

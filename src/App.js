@@ -167,6 +167,22 @@ function App() {
           </div>
         </section>
 
+        <div className="skills-list">
+          {skillCategories.map((category, index) => (
+            <div key={category.label} className="skill-row">
+              <span>{String(index + 1).padStart(2, "0")}</span>
+
+              <h3>{category.label}</h3>
+
+              <div className="skill-chips">
+                {category.skills.map((skill) => (
+                  <b key={skill}>{skill}</b>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
         <section className="contact-section" id="contact" data-reveal>
           <p className="section-index">05 / CONTACT</p>
           <h2>Have a thoughtful idea?<br /><em>Let’s make it real.</em></h2>
