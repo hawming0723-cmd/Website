@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const skillCategories = [
   { label: 'Front end', skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Bootstrap'] },
@@ -33,6 +33,8 @@ function Arrow() {
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const cursorRef = useRef(null);
+  const scrollThumbRef = useRef(null);
 
   useEffect(() => {
     const sections = document.querySelectorAll('[data-reveal]');
@@ -44,10 +46,54 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!window.matchMedia('(pointer: fine)').matches) return undefined;
+
+    const moveCursor = (event) => {
+      cursorRef.current?.style.setProperty('--cursor-x', `${event.clientX}px`);
+      cursorRef.current?.style.setProperty('--cursor-y', `${event.clientY}px`);
+      cursorRef.current?.classList.add('is-visible');
+    };
+    const updateCursorState = (event) => {
+      cursorRef.current?.classList.toggle('is-active', Boolean(event.target.closest('a, button')));
+    };
+    const hideCursor = () => cursorRef.current?.classList.remove('is-visible');
+
+    window.addEventListener('pointermove', moveCursor, { passive: true });
+    document.addEventListener('pointerover', updateCursorState);
+    document.addEventListener('pointerout', updateCursorState);
+    document.documentElement.addEventListener('mouseleave', hideCursor);
+    return () => {
+      window.removeEventListener('pointermove', moveCursor);
+      document.removeEventListener('pointerover', updateCursorState);
+      document.removeEventListener('pointerout', updateCursorState);
+      document.documentElement.removeEventListener('mouseleave', hideCursor);
+    };
+  }, []);
+
+  useEffect(() => {
+    const updateScrollThumb = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      const railHeight = window.innerHeight - 48;
+      const thumbHeight = 62;
+      scrollThumbRef.current?.style.setProperty('--thumb-y', `${progress * (railHeight - thumbHeight)}px`);
+    };
+    updateScrollThumb();
+    window.addEventListener('scroll', updateScrollThumb, { passive: true });
+    window.addEventListener('resize', updateScrollThumb);
+    return () => {
+      window.removeEventListener('scroll', updateScrollThumb);
+      window.removeEventListener('resize', updateScrollThumb);
+    };
+  }, []);
+
   const closeMenu = () => setMenuOpen(false);
 
   return (
     <div className="site-shell">
+      <div className="custom-cursor" ref={cursorRef} aria-hidden="true" />
+      <div className="scroll-rail" aria-hidden="true"><i ref={scrollThumbRef} /></div>
       <div className="ambient-layer" aria-hidden="true">
         <i className="ambient-orb ambient-orb--violet" />
         <i className="ambient-orb ambient-orb--lime" />
@@ -97,13 +143,12 @@ function App() {
 
         <section className="featured-work section-pad" id="work" data-reveal>
           <div className="section-heading-row"><p className="section-index">02 / SELECTED WORK</p><p>01 — 01</p></div>
-          <a className="project-feature" href={project.githubUrl} target="_blank" rel="noreferrer">
-            <div className="project-art" aria-hidden="true"><span className="art-label">SH</span><span className="art-circle" /><span className="art-line" /></div>
+          <article className="project-feature">
             <div className="project-content">
               <div><p className="project-number">001</p><h2>{project.name}</h2></div>
-              <div className="project-details"><p>{project.role}</p><p>{project.description}</p><span className="text-link">View the code <Arrow /></span></div>
+              <div className="project-details"><p>{project.role}</p><p>{project.description}</p><a className="text-link" href={project.githubUrl} target="_blank" rel="noreferrer">View the code <img src="/logos/github.png" alt="GitHub" /></a></div>
             </div>
-          </a>
+          </article>
         </section>
 
         <section className="experience-section section-pad" data-reveal>
