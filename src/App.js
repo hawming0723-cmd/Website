@@ -1,8 +1,8 @@
 ﻿import React, { useEffect, useRef, useState } from 'react';
 
 const skillCategories = [
-  { label: 'Front end', skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Bootstrap'] },
-  { label: 'Back end', skills: ['Node.js', 'Express.js', 'REST APIs', 'Full-stack development'] },
+  { label: 'Front-End', skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Bootstrap'] },
+  { label: 'Back-End', skills: ['Node.js', 'Express.js', 'REST APIs', 'Full-stack development'] },
   { label: 'Data', skills: ['MySQL', 'MongoDB'] },
   { label: 'Languages', skills: ['Python', 'JavaScript'] }
 ];
