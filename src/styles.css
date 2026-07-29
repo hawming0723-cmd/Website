@@ -474,6 +474,8 @@ em {
     font: 10px 'DM Mono', monospace;
     letter-spacing: .08em;
     text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .project-details p:nth-child(2) {
