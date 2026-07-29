@@ -148,7 +148,6 @@ function App() {
 
           <div className="project-content">
             <div>
-              <p className="project-number">001</p>
               <h2>{project.name}</h2>
             </div>
 
@@ -166,22 +165,55 @@ function App() {
             </div>
           </div>
         </section>
+    
+              {/* ================= SKILLS ================= */}
+        <section className="skills-section section-pad" id="skills" data-reveal>
+          <p className="section-index">03 / SKILLS</p>
 
-        <div className="skills-list">
-          {skillCategories.map((category, index) => (
-            <div key={category.label} className="skill-row">
-              <span>{String(index + 1).padStart(2, "0")}</span>
+          <div className="skills-list">
+            {skillCategories.map((category, index) => (
+              <div key={category.label} className="skill-row">
+                <span>{String(index + 1).padStart(2, "0")}</span>
 
-              <h3>{category.label}</h3>
+                <h3>{category.label}</h3>
 
-              <div className="skill-chips">
-                {category.skills.map((skill) => (
-                  <b key={skill}>{skill}</b>
-                ))}
+                <div className="skill-chips">
+                  {category.skills.map((skill) => (
+                    <b key={skill}>{skill}</b>
+                  ))}
+                </div>
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ================= EXPERIENCE ================= */}
+        <section className="experience-section section-pad" id="experience" data-reveal>
+          <p className="section-index">04 / EXPERIENCE</p>
+
+          <div className="experience-card">
+            <div className="experience-title">
+              <h2>{experience.role}</h2>
+              <p>{experience.company}</p>
             </div>
-          ))}
-        </div>
+
+            <div>
+              <p className="experience-date">{experience.dateRange}</p>
+
+              <ul>
+                {experience.bullets.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="tag-list">
+              {experience.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <section className="contact-section" id="contact" data-reveal>
           <p className="section-index">05 / CONTACT</p>
