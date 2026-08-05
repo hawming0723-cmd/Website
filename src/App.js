@@ -130,8 +130,8 @@ function App() {
         <section className="intro-section section-pad" id="about" data-reveal>
           <p className="section-index">01 / ABOUT</p>
           <div className="intro-copy">
-            <h2>A curious builder with an eye for the details that make a product feel <em>right.</em></h2>
-            <p>I care about making the useful feel effortless. My work combines visual sensitivity with responsive, practical front-end development—and I enjoy working across the stack when a project calls for it.</p>
+            <h2>I enjoy building websites and products that improve the user experience and make them feel <em>right.</em></h2>
+            <p>I like making websites that are simple, easy to use. I mainly work on front-end development, but I am also happy to work on the backend when needed.</p>
           </div>
           <div className="principles">
             <article><span>01</span><h3>Clear by design</h3><p>Simple visual systems that let people focus on what matters.</p></article>
